@@ -1,1 +1,3 @@
-// Reexport your entry components here
+import DynamicScroll from './DynamicScroll.svelte';
+
+export { DynamicScroll };
