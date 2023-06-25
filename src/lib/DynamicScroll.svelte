@@ -160,7 +160,7 @@
 	bind:this={container}
 	on:scroll={async (event) => {
 		await load();
-		if (!!onScrollCallback) onScrollCallback(event);
+		if (onScrollCallback) onScrollCallback(event);
 	}}
 >
 	{#each list as value, index (value.id ?? value)}
