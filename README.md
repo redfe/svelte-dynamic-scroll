@@ -1,3 +1,69 @@
+# Svelte Dynamic Scroll
+
+Dynamic Scroll Component to Svelte.
+
+## Installation
+
+```
+npm i svelte-dynamic-scroll
+#or
+$ yarn add svelte-dynamic-scroll
+```
+
+## Usage
+
+```html
+<script>
+	import { DynamicScroll } from 'dynamic-scroll-svelte';
+
+	function nextChunk(lastValue) {
+		const _last = lastValue ?? -1;
+		let array = [];
+		for (let i = 0; i < 10; i++) {
+			array.push(_last + (i + 1));
+		}
+		return array;
+	}
+</script>
+
+<div class="app">
+	<DynamicScroll {nextChunk} let:prop="{value}">
+		<div class="row">{value}</div>
+	</DynamicScroll>
+</div>
+
+<style>
+	.app {
+		height: 80vh;
+		width: 80%;
+		max-width: 300px;
+		min-width: 100px;
+		overflow-y: hidden;
+		border: solid 1px;
+		box-sizing: border-box;
+		border-radius: 10px;
+	}
+	.row {
+		border: none;
+		border-top: 1px solid rgba(0, 0, 0, 0.1);
+		height: 40px;
+		width: 100%;
+		padding: 10px;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	.end {
+		width: 100%;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+</style>
+```
+
+## Demo
+
+TODO
+
 # create-svelte
 
 Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
