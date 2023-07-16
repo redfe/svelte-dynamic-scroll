@@ -1,6 +1,6 @@
 {
 	"name": "svelte-dynamic-scroll",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "echo $BASE_PATH && vite build && npm run package",
