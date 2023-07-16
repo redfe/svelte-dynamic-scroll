@@ -1,3 +1,7 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/redfe/svelte-dynamic-scroll/actions/workflows/ci.yml/badge.svg)](https://github.com/redfe/svelte-dynamic-scroll/actions/workflows/ci.yml)
+[![npm version](https://badge.fury.io/js/svelte-dynamic-scroll.svg)](https://badge.fury.io/js/svelte-dynamic-scroll)
+
 # Svelte Dynamic Scroll
 
 Dynamic Scroll Component to Svelte.
@@ -12,7 +16,7 @@ $ yarn add svelte-dynamic-scroll
 
 ## Usage
 
-```html
+```svelte
 <script>
 	import { DynamicScroll } from 'svelte-dynamic-scroll';
 
@@ -32,7 +36,7 @@ $ yarn add svelte-dynamic-scroll
 <div class="app">
 	<h2>Infinite Scroll</h2>
 	<div class="container">
-		<DynamicScroll {nextChunk} let:prop="{{" value }}>
+		<DynamicScroll {nextChunk} let:prop={{ value }}>
 			<div class="row">{value}</div>
 		</DynamicScroll>
 	</div>
