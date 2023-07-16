@@ -2,7 +2,7 @@
 	import DynamicScroll from '$lib/DynamicScroll.svelte';
 
 	const MAX = 500;
-	const chunkSize = 10;
+	const chunkSize = 20;
 	const initialValue = 0;
 
 	/**
