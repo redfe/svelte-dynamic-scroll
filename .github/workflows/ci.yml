@@ -9,7 +9,7 @@ on:
     branches:
       - main
 jobs:
-  test:
+  test_and_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -27,13 +27,6 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
-
-  build_site:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
       - name: build
         env:
           BASE_PATH: '/svelte-dynamic-scroll'
@@ -48,7 +41,7 @@ jobs:
           path: 'build/'
 
   deploy:
-    needs: build_site
+    needs: test_and_build
     runs-on: ubuntu-latest
 
     permissions:
