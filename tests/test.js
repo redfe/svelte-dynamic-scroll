@@ -16,7 +16,7 @@ test.describe('simple page', () => {
 	test.beforeEach(async ({ page }) => {
 		await page.setViewportSize({
 			width: 200,
-			height: 100
+			height: 200
 		});
 	});
 
