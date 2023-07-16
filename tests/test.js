@@ -3,21 +3,32 @@ import { expect, test } from '@playwright/test';
 // 10 件ぐらいだと nextChunk が複数かい発動してしまうのである程度増やしておく
 const CHUNK_SIZE = 20;
 
+const VIEWPORT_SIZE = {
+	width: 200,
+	height: 400
+};
+
+async function wait(millisec) {
+	await new Promise((resolve) => setTimeout(resolve, millisec));
+}
+
+/**
+ * @param {import('@playwright/test').Page} page
+ */
 async function scroll(page) {
-	let selector = `ul li:last-child`;
-	await page.waitForSelector(selector);
-	await page.$eval(selector, (dom) => {
-		dom.scrollIntoView();
+	const elementHandle = await page.$('ul');
+	const { height, scrollHeight } = await elementHandle.evaluate((element) => {
+		return { height: element.clientHeight, scrollHeight: element.scrollHeight };
 	});
-	await new Promise((resolve) => setTimeout(resolve, 300));
+	console.log('height scrollHeight', height, scrollHeight);
+	await page.mouse.move(VIEWPORT_SIZE.width / 2, VIEWPORT_SIZE.height / 2);
+	await page.mouse.wheel(0, scrollHeight - height * 0.95);
+	await wait(500);
 }
 
 test.describe('simple page', () => {
 	test.beforeEach(async ({ page }) => {
-		await page.setViewportSize({
-			width: 200,
-			height: 200
-		});
+		await page.setViewportSize(VIEWPORT_SIZE);
 	});
 
 	test(`row count after initial mount is expected to be ${CHUNK_SIZE}`, async ({ page }) => {
@@ -25,7 +36,7 @@ test.describe('simple page', () => {
 		await page.goto('/simple');
 
 		// Action
-		await new Promise((resolve) => setTimeout(resolve, 300));
+		await wait(100);
 
 		// Assertion
 		await expect((await page.getByRole('row').all()).length).toBe(CHUNK_SIZE);
@@ -38,12 +49,13 @@ test.describe('simple page', () => {
 		await page.goto('/simple');
 
 		// Action
-		await new Promise((resolve) => setTimeout(resolve, 300));
-		await scroll(page, 1);
+		await wait(100);
+		await scroll(page);
 
 		// Assertion
-		await expect((await page.getByRole('row').all()).length).toBeGreaterThan(20);
-		console.log((await page.getByRole('row').all()).length);
+		const length = (await page.getByRole('row').all()).length;
+		console.log('length', length);
+		await expect(length).toBeGreaterThan(20);
 	});
 
 	test(`row count after scrolling tow times is expected to be greater than ${
@@ -53,13 +65,14 @@ test.describe('simple page', () => {
 		await page.goto('/simple');
 
 		// Action
-		await new Promise((resolve) => setTimeout(resolve, 300));
+		await wait(100);
 		for (let i = 0; i < 2; i++) {
-			await scroll(page, i + 1);
+			await scroll(page);
 		}
 
 		// Assertion
-		await expect((await page.getByRole('row').all()).length).toBeGreaterThan(CHUNK_SIZE * 2);
-		console.log((await page.getByRole('row').all()).length);
+		const length = (await page.getByRole('row').all()).length;
+		console.log('length', length);
+		await expect(length).toBeGreaterThan(CHUNK_SIZE * 2);
 	});
 });
