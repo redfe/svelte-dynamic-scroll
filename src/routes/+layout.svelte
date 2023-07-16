@@ -1,3 +1,7 @@
+<script>
+	import { base } from '$app/paths';
+</script>
+
 <svelte:head>
 	<title>Dynamic Scroll Examples</title>
 	<meta name="description" content="Dynamic scroll Examples" />
@@ -5,9 +9,9 @@
 
 <div class="top">
 	<nav>
-		<a href="/">Home</a>
-		<a href="/simple">Simple</a>
-		<a href="/datetime">Datetime</a>
+		<a href={`${base}/`}>Home</a>
+		<a href={`${base}/simple`}>Simple</a>
+		<a href={`${base}/datetime`}>Datetime</a>
 	</nav>
 	<main>
 		<slot />
