@@ -36,7 +36,7 @@ test.describe('simple page', () => {
 		await page.goto('/simple');
 
 		// Action
-		await wait(100);
+		await wait(500);
 
 		// Assertion
 		const length = (await page.getByRole('row').all()).length;
@@ -51,7 +51,7 @@ test.describe('simple page', () => {
 		await page.goto('/simple');
 
 		// Action
-		await wait(100);
+		await wait(500);
 		await scroll(page);
 
 		// Assertion
@@ -67,7 +67,7 @@ test.describe('simple page', () => {
 		await page.goto('/simple');
 
 		// Action
-		await wait(100);
+		await wait(500);
 		for (let i = 0; i < 2; i++) {
 			await scroll(page);
 		}
