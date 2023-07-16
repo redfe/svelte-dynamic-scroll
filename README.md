@@ -50,7 +50,7 @@ $ yarn add svelte-dynamic-scroll
 
 ## Demo
 
-TODO
+https://redfe.github.io/svelte-dynamic-scroll
 
 # create-svelte
 
