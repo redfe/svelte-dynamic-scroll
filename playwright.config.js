@@ -4,6 +4,7 @@ const config = {
 		command: 'npm run build && npm run preview',
 		port: 4173
 	},
+	reporter: 'html',
 	testDir: 'tests',
 	testMatch: /(.+\.)?(test|spec)\.[jt]s/
 };
