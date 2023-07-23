@@ -14,7 +14,8 @@ const config = {
 		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter({
-			fallback: 'index.html'
+			// See https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site
+			fallback: '404.html'
 		}),
 		paths: {
 			base: dev ? '' : process.env.BASE_PATH
