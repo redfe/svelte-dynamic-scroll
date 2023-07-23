@@ -1,5 +1,5 @@
 <script>
-	import DynamicScroll from '$lib/DynamicScroll.svelte';
+	import DynamicScroll from '$lib/index';
 
 	const MAX = 500;
 	const chunkSize = 20;

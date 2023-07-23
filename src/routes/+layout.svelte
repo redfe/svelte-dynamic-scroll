@@ -19,8 +19,12 @@
 </div>
 
 <style>
+	:global(body) {
+		margin: 0;
+	}
 	:global(:has(> .top)) {
 		padding: 0;
+		margin: 0;
 		display: flex !important;
 		justify-content: center;
 	}
@@ -31,6 +35,6 @@
 		height: 30px;
 	}
 	main {
-		height: calc(100vh - 50px);
+		height: calc(100vh - 40px);
 	}
 </style>

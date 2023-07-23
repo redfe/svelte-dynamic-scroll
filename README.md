@@ -18,7 +18,7 @@ $ yarn add svelte-dynamic-scroll
 
 ```svelte
 <script>
-	import { DynamicScroll } from 'svelte-dynamic-scroll';
+	import DynamicScroll from 'svelte-dynamic-scroll';
 
 	/**
 	 * @param {number} lastValue
