@@ -4,13 +4,15 @@
 
 # Svelte Dynamic Scroll
 
-Dynamic Scroll Component to Svelte.
+Dynamic Scroll Component for Svelte.
 
 ## Installation
 
 ```
-npm i svelte-dynamic-scroll
-#or
+$ npm i svelte-dynamic-scroll
+
+or
+
 $ yarn add svelte-dynamic-scroll
 ```
 
@@ -56,23 +58,16 @@ $ yarn add svelte-dynamic-scroll
 
 https://redfe.github.io/svelte-dynamic-scroll
 
-# create-svelte
+## Properties
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+| Property               | Type     | Default   | Description                                                                          |
+| ---------------------- | -------- | --------- | ------------------------------------------------------------------------------------ |
+| previousChunk          | function | undefined | Function to be called when the scroll reaches the top of the container.              |
+| nextChunk              | function | undefined | Function to be called when the scroll reaches the bottom of the container.           |
+| bufferSize             | number   | -1        | Number of elements to be rendered before and after the visible area.                 |
+| triggerRangeRatio      | number   | 0.1       | The ratio of the visible area to trigger the previousChunk or nextChunk function.    |
+| maxRetryCountOnPreLoad | number   | 20        | Maximum number of retries when the previousChunk or nextChunk function returns null. |
+| onScrollCallback       | function | undefined | Callback function to be invoked when the scroll event occurs.                        |
 
 ## Developing
 
