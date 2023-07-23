@@ -13,7 +13,7 @@
 		<a href={`${base}/simple`}>Simple</a>
 		<a href={`${base}/datetime`}>Datetime</a>
 		<a href="https://github.com/redfe/svelte-dynamic-scroll" target="_blank"
-			><img src="/github-mark.svg" title="GitHub Repo" alt="GitHub Repo" /></a
+			><img src={`${base}/github-mark.svg`} title="GitHub Repo" alt="GitHub Repo" /></a
 		>
 	</nav>
 	<main>
