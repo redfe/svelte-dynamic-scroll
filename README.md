@@ -4,7 +4,7 @@
 
 # Svelte Dynamic Scroll
 
-Dynamic Scroll Component for Svelte.
+A simple Dynamic Scroll Component for Svelte.
 
 ## Installation
 
@@ -20,7 +20,7 @@ $ yarn add svelte-dynamic-scroll
 
 ```svelte
 <script>
-	import DynamicScroll from 'svelte-dynamic-scroll';
+	import { DynamicScroll } from 'svelte-dynamic-scroll';
 
 	/**
 	 * @param {number} lastValue
@@ -39,17 +39,27 @@ $ yarn add svelte-dynamic-scroll
 	<h2>Infinite Scroll</h2>
 	<div class="container">
 		<DynamicScroll {nextChunk} let:prop={{ value }}>
-			<div class="row">{value}</div>
+			<div>{value}</div>
 		</DynamicScroll>
 	</div>
 </div>
 
 <style>
-	   ...
+	:global(body) {
+		margin: 0;
+	}
+	.app {
+		height: 100vh;
+	}
+	h2 {
+		height: 50px;
+		margin: 0;
+		padding: 10px;
+		box-sizing: border-box;
+	}
 	.container {
-	       ...
-		height: 80vh;
-	       ...
+		/* It is important to specify height */
+		height: calc(100% - 50px);
 	}
 </style>
 ```
