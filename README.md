@@ -78,6 +78,7 @@ https://redfe.github.io/svelte-dynamic-scroll
 | triggerRangeRatio      | number   | 0.1       | The ratio of the visible area to trigger the previousChunk or nextChunk function.    |
 | maxRetryCountOnPreLoad | number   | 20        | Maximum number of retries when the previousChunk or nextChunk function returns null. |
 | onScrollCallback       | function | undefined | Callback function to be invoked when the scroll event occurs.                        |
+| axis                   | string   | 'y'       | Scroll axis. 'x' or 'y'                                                              |
 
 ## Developing
 
