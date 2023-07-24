@@ -1,6 +1,7 @@
 <script>
 	import DynamicScroll from '../../src/lib/DynamicScroll.svelte';
-	$: isY = ($$props.axis ?? 'y') === 'y';
+	$: axis = $$props.axis ?? 'y';
+	$: isY = axis === 'y' || axis === '';
 </script>
 
 <div class="app">

@@ -59,7 +59,7 @@
 	 */
 	let loading = false;
 
-	$: isY = axis === 'y';
+	$: isY = axis === '' || axis === 'y';
 
 	function getScrollSize() {
 		if (!container) return 0;
