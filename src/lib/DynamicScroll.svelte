@@ -40,6 +40,11 @@
 	export let onScrollCallback = undefined;
 
 	/**
+	 * @type {'x'|'y'} axis
+	 */
+	export let axis = 'y';
+
+	/**
 	 * @type {V[]}
 	 */
 	let list = [];
@@ -54,31 +59,59 @@
 	 */
 	let loading = false;
 
+	$: isY = axis === 'y';
+
+	function getScrollSize() {
+		if (!container) return 0;
+		return isY ? container.scrollHeight : container.scrollWidth;
+	}
+
+	function getClientSize() {
+		if (!container) return 0;
+		return isY ? container.clientHeight : container.clientWidth;
+	}
+
+	function getScrollPosition() {
+		if (!container) return 0;
+		return isY ? container.scrollTop : container.scrollLeft;
+	}
+
 	function getTriggerRange() {
-		return !container ? 0 : container.clientHeight * triggerRangeRatio;
+		if (!container) return 0;
+		return getClientSize() * triggerRangeRatio;
+	}
+
+	function scrollTo(scrollPosition) {
+		if (!container) return;
+		if (isY) {
+			container.scrollTo(0, scrollPosition);
+		} else {
+			container.scrollTo(scrollPosition, 0);
+		}
 	}
 
 	async function loadPrevious() {
 		if (!previousChunk) return;
 		if (!container) return;
-		const beforeScrollHeight = container.scrollHeight;
-		const beforeScrollTop = container.scrollTop;
+		const beforeScrollSize = getScrollSize();
+		const beforeScrollPosition = getScrollPosition();
 		const prev = previousChunk(list.length === 0 ? null : list[0]);
 		if (prev.length === 0) return;
 		list = [...prev, ...list];
 		await tick();
-		container.scrollTo(0, container.scrollHeight - beforeScrollHeight + beforeScrollTop);
+		const scrollValue = getScrollSize() - beforeScrollSize + beforeScrollPosition;
+		scrollTo(scrollValue);
 	}
 
 	async function loadNext() {
 		if (!nextChunk) return;
 		if (!container) return;
-		const beforeScrollTop = container.scrollTop;
+		const beforeScrollPosition = getScrollPosition();
 		const next = nextChunk(list.length === 0 ? null : list[list.length - 1]);
 		if (next.length === 0) return;
 		list = [...list, ...next];
 		await tick();
-		container.scrollTo(0, beforeScrollTop);
+		scrollTo(beforeScrollPosition);
 	}
 
 	/**
@@ -87,18 +120,20 @@
 	async function downSize(isKeepTop) {
 		if (!container) return;
 		if (bufferSize < 0) return;
+		// previousChunk と nextChunk のどちらかがない場合は戻ることができないので downSize しない
+		if (!previousChunk || !nextChunk) return;
 		// for memory saving
-		const beforeScrollTop = container.scrollTop;
-		const beforeScrollHeight = container.scrollHeight;
-		let _isKeepTop = (isKeepTop && !!nextChunk) || (!isKeepTop && !previousChunk);
-		if (_isKeepTop) {
+		const beforeScrollPosition = getScrollPosition();
+		const beforeScrollSize = getScrollSize();
+		if (isKeepTop) {
 			list = list.slice(0, bufferSize);
 			await tick();
-			container.scrollTo(0, beforeScrollTop);
+			scrollTo(beforeScrollPosition);
 		} else {
-			list = list.slice(list.length - bufferSize, bufferSize);
+			const sub = Math.max(0, list.length - bufferSize);
+			list = list.slice(sub, sub + bufferSize);
 			await tick();
-			container.scrollTo(0, container.scrollHeight - beforeScrollHeight + beforeScrollTop);
+			scrollTo(beforeScrollPosition - (beforeScrollSize - getScrollSize()));
 		}
 	}
 
@@ -110,7 +145,7 @@
 			const loadInternal = async (loadFunc) => {
 				// 画面いっぱいに表示するまでロードする
 				let loadCount = 0;
-				while (loadCount === 0 || container.scrollHeight <= container.clientHeight) {
+				while (loadCount === 0 || getScrollSize() <= getClientSize()) {
 					loadCount++;
 					await loadFunc();
 					if (list.length === 0) return;
@@ -135,12 +170,12 @@
 		if (loading) return;
 		loading = true;
 		try {
-			if (!!previousChunk && container.scrollTop <= getTriggerRange()) {
+			if (!!previousChunk && getScrollPosition() <= getTriggerRange()) {
 				await loadPrevious();
 				await downSize(true);
 			} else if (
 				!!nextChunk &&
-				container.scrollTop >= container.scrollHeight - container.clientHeight - getTriggerRange()
+				getScrollPosition() >= getScrollSize() - getClientSize() - getTriggerRange()
 			) {
 				await loadNext();
 				await downSize(false);
@@ -157,6 +192,8 @@
 
 <ul
 	class="container"
+	style:overflow={isY ? 'hidden scroll' : 'scroll hidden'}
+	style:display={isY ? 'block' : 'flex'}
 	bind:this={container}
 	on:scroll={async (event) => {
 		await load();
@@ -172,7 +209,6 @@
 	.container {
 		width: 100%;
 		height: 100%;
-		overflow-y: scroll;
 		box-sizing: border-box;
 	}
 	ul {
