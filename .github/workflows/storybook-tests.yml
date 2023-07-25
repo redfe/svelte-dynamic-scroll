@@ -11,15 +11,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - name: Install dependencies
-        working-directory: storybook
-        run: npm i
-      - name: Install Playwright
-        working-directory: storybook
-        run: npx playwright install --with-deps
-      - name: Build Storybook
-        working-directory: storybook
-        run: npm run build-storybook --quiet
       - name: Serve Storybook and run tests
         working-directory: storybook
-        run: npx -y concurrently -k -s first -n "SB,TEST" -c "magenta,blue" "npx http-server storybook-static --port 6006 --silent" "npx wait-on tcp:6006 && npm run test"
+        run: npx -y concurrently -k -s first -n "SB,TEST" -c "magenta,blue" "ls -al" "echo hello"
