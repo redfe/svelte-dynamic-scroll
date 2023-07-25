@@ -6,14 +6,12 @@
 	 */
 
 	/**
-	 * @param {V|undefined} lastValue
-	 * @returns {V[]}
+	 * @type {<V>(lastValue:V|undefined)=>V[]}
 	 */
 	export let previousChunk = undefined;
 
 	/**
-	 * @param {V|undefined} lastValue
-	 * @returns {V[]}
+	 * @type {<V>(lastValue:V|undefined)=>V[]}
 	 */
 	export let nextChunk = undefined;
 
@@ -34,8 +32,7 @@
 	export let maxRetryCountOnPreLoad = 20;
 
 	/**
-	 * @param {MouseEvent} event
-	 * @returns {void}
+	 * @type {(event:MouseEvent)=>void}
 	 */
 	export let onScrollCallback = undefined;
 
@@ -95,7 +92,7 @@
 		if (!container) return;
 		const beforeScrollSize = getScrollSize();
 		const beforeScrollPosition = getScrollPosition();
-		const prev = previousChunk(list.length === 0 ? null : list[0]);
+		const prev = previousChunk(list.length === 0 ? undefined : list[0]);
 		if (prev.length === 0) return;
 		list = [...prev, ...list];
 		await tick();
@@ -107,7 +104,7 @@
 		if (!nextChunk) return;
 		if (!container) return;
 		const beforeScrollPosition = getScrollPosition();
-		const next = nextChunk(list.length === 0 ? null : list[list.length - 1]);
+		const next = nextChunk(list.length === 0 ? undefined : list[list.length - 1]);
 		if (next.length === 0) return;
 		list = [...list, ...next];
 		await tick();
