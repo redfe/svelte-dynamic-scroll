@@ -191,6 +191,7 @@
 	class="container"
 	style:overflow={isY ? 'hidden scroll' : 'scroll hidden'}
 	style:display={isY ? 'block' : 'flex'}
+	role="listbox"
 	bind:this={container}
 	on:scroll={async (event) => {
 		await load();
