@@ -2,16 +2,16 @@
 	import { tick, onMount } from 'svelte';
 
 	/**
-	 * @template {{id?:string}} V
+	 * @typedef {{id?:string}} Value
 	 */
 
 	/**
-	 * @type {<V>(lastValue:V|undefined)=>V[]}
+	 * @type {(lastValue:Value)=>Value[]}
 	 */
 	export let previousChunk = undefined;
 
 	/**
-	 * @type {<V>(lastValue:V|undefined)=>V[]}
+	 * @type {(lastValue:Value)=>Value[]}
 	 */
 	export let nextChunk = undefined;
 
@@ -32,7 +32,7 @@
 	export let maxRetryCountOnPreLoad = 20;
 
 	/**
-	 * @type {(event:MouseEvent)=>void}
+	 * @type {(event:UIEvent)=>void}
 	 */
 	export let onScrollCallback = undefined;
 
@@ -42,12 +42,12 @@
 	export let axis = 'y';
 
 	/**
-	 * @type {V[]}
+	 * @type {Value[]}
 	 */
 	let list = [];
 
 	/**
-	 * @type {HTMLDivElement}
+	 * @type {HTMLUlListElement}
 	 */
 	let container;
 
