@@ -111,7 +111,8 @@
 				{nextChunk}
 				{triggerRangeRatio}
 				bufferSize={100}
-				let:prop={{ index, value }}
+				let:index
+				let:value
 			>
 				<div
 					class="row"

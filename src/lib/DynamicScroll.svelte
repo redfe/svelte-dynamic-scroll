@@ -199,7 +199,7 @@
 	}}
 >
 	{#each list as value, index (value.id ?? value)}
-		<li><slot prop={{ index, value }} /></li>
+		<li><slot {index} {value} prop={{ index, value }} /></li>
 	{/each}
 </ul>
 

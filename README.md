@@ -38,8 +38,8 @@ $ yarn add svelte-dynamic-scroll
 <div class="app">
 	<h2>Infinite Scroll</h2>
 	<div class="container">
-		<DynamicScroll {nextChunk} let:prop={{ value }}>
-			<div>{value}</div>
+		<DynamicScroll {nextChunk} let:index let:value>
+			<div>{value}:{index}</div>
 		</DynamicScroll>
 	</div>
 </div>
@@ -79,6 +79,13 @@ https://redfe.github.io/svelte-dynamic-scroll
 | maxRetryCountOnPreLoad | number   | 20        | Maximum number of retries when the previousChunk or nextChunk function returns null. |
 | onScrollCallback       | function | undefined | Callback function to be invoked when the scroll event occurs.                        |
 | axis                   | string   | 'y'       | Scroll axis. 'x' or 'y'                                                              |
+
+## Slot Properties
+
+| Property | Type   | Description                                                                                                                                             |
+| -------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| index    | number | Index of the element to be rendered.                                                                                                                    |
+| value    | Value  | Value of the element to be rendered. It should have the same type as the return value of the ` previousChunk`` function and the  `nextChunk`` function. |
 
 ## Developing
 

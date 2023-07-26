@@ -27,7 +27,7 @@
 </script>
 
 <div class="app">
-	<DynamicScroll {nextChunk} let:prop={{ value }}>
+	<DynamicScroll {nextChunk} let:value>
 		<div role="row" class="row">{value}</div>
 		{#if value === MAX}<div class="end">end</div>{/if}
 	</DynamicScroll>

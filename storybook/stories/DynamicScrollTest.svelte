@@ -10,8 +10,8 @@
 		style:height={isY ? '300px' : undefined}
 		style:width={isY ? '100px' : '300px'}
 	>
-		<DynamicScroll {...$$props} let:prop={{ value }}>
-			<div class="row">{value}</div>
+		<DynamicScroll {...$$props} let:value let:index>
+			<div class="row">{value}({index})</div>
 		</DynamicScroll>
 	</div>
 </div>
