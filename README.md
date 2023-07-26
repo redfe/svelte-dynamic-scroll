@@ -85,7 +85,7 @@ https://redfe.github.io/svelte-dynamic-scroll
 | Property | Type   | Description                                                                                                                                         |
 | -------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | index    | number | Index of the element to be rendered.                                                                                                                |
-| value    | Value  | Value of the element to be rendered. It should have the same type as the return value of the `previousChunk` function and the `nextChunk` function. |
+| value    | any    | Value of the element to be rendered. It should have the same type as the return value of the `previousChunk` function and the `nextChunk` function. |
 
 ## Developing
 
