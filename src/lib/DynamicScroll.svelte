@@ -2,7 +2,7 @@
 	import { tick, onMount } from 'svelte';
 
 	/**
-	 * @typedef {{id?:string}} Value
+	 * @typedef {any} Value
 	 */
 
 	/**
@@ -199,7 +199,7 @@
 	}}
 >
 	{#each list as value, index (value.id ?? value)}
-		<li><slot {index} {value} prop={{ index, value }} /></li>
+		<li><slot {index} {value} /></li>
 	{/each}
 </ul>
 
