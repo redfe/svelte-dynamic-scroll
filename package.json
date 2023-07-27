@@ -10,7 +10,7 @@
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "echo $BASE_PATH && vite build && npm run package",
+		"build": "echo $BASE_PATH && vite build && npm run package && npm run build-storybook && npm run copy-storybook",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",
 		"prepublishOnly": "npm run package",
@@ -20,7 +20,9 @@
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"build-storybook": "npm --prefix storybook run build-storybook",
+		"copy-storybook": "cp -R storybook/storybook-static/ build/storybook-static"
 	},
 	"exports": {
 		".": {

@@ -12,6 +12,7 @@
 		<a href={`${base}/`}>Home</a>
 		<a href={`${base}/simple`}>Simple</a>
 		<a href={`${base}/datetime`}>Datetime</a>
+		<a href={`${base}/storybook-static`}>Storybook</a>
 		<a href="https://github.com/redfe/svelte-dynamic-scroll" target="_blank"
 			><img src={`${base}/github-mark.svg`} title="GitHub Repo" alt="GitHub Repo" /></a
 		>
@@ -40,7 +41,7 @@
 		column-gap: 10px;
 		margin-top: 10px;
 	}
-	nav a:last-child {
+	nav a:nth-child(4) {
 		flex-grow: 1;
 		text-align: right;
 	}
