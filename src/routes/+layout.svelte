@@ -53,7 +53,7 @@
 	}
 	main {
 		width: 100%;
-		height: calc(100vh - 70px);
+		height: calc(100svh - 50px);
 		padding: 20px;
 		box-sizing: border-box;
 	}
