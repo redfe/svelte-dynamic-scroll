@@ -1,4 +1,4 @@
-<h1>Home</h1>
+<h1>Svelte Dynamic Scroll Demo</h1>
 
 <style>
 	h1 {
