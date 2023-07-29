@@ -56,6 +56,11 @@
 	 */
 	let loading = false;
 
+	/**
+	 * @type {boolean}
+	 */
+	let isPrevious = false;
+
 	$: isY = axis === '' || axis === 'y';
 
 	function getScrollSize() {
@@ -92,18 +97,18 @@
 		if (!container) return;
 		const beforeScrollSize = getScrollSize();
 		const beforeScrollPosition = getScrollPosition();
-		const prev = previousChunk(list.length === 0 ? undefined : list[0]);
+		const prev = await previousChunk(list.length === 0 ? undefined : list[0]);
 		if (prev.length === 0) return;
 		list = [...prev, ...list];
 		await tick();
-		const scrollValue = getScrollSize() - beforeScrollSize + beforeScrollPosition;
+		const scrollValue = getScrollSize() - beforeScrollSize - beforeScrollPosition;
 		scrollTo(scrollValue);
 	}
 
 	async function loadNext() {
 		if (!nextChunk) return;
 		if (!container) return;
-		const next = nextChunk(list.length === 0 ? undefined : list[list.length - 1]);
+		const next = await nextChunk(list.length === 0 ? undefined : list[list.length - 1]);
 		if (next.length === 0) return;
 		list = [...list, ...next];
 		await tick();
@@ -176,6 +181,7 @@
 		if (!container) return;
 		if (loading) return;
 		if (!!previousChunk && getScrollPosition() <= getTriggerRange()) {
+			isPrevious = true;
 			await executeLoad(async () => {
 				await loadPrevious();
 				await downSize(true);
@@ -184,6 +190,7 @@
 			!!nextChunk &&
 			getScrollPosition() >= getScrollSize() - getClientSize() - getTriggerRange()
 		) {
+			isPrevious = false;
 			await executeLoad(async () => {
 				await loadNext();
 				await downSize(false);
@@ -219,9 +226,11 @@
 	role="listbox"
 	bind:this={container}
 >
+	{#if loading && isPrevious}<li><slot name="loading" /></li>{/if}
 	{#each list as value, index (value.id ?? value)}
 		<li><slot {index} {value} /></li>
 	{/each}
+	{#if loading && !isPrevious}<li><slot name="loading" /></li>{/if}
 </ul>
 
 <style>
