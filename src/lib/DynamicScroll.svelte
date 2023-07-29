@@ -54,7 +54,7 @@
 	/**
 	 * @type {boolean}
 	 */
-	let loading = false;
+	let isLoading = false;
 
 	/**
 	 * @type {boolean}
@@ -154,19 +154,19 @@
 	}
 
 	async function executeLoad(loadFunc) {
-		loading = true;
+		isLoading = true;
 		removeScrollEventListener();
 		try {
 			await loadFunc();
 		} finally {
-			loading = false;
+			isLoading = false;
 			addScrollEventListener();
 		}
 	}
 
 	async function load() {
 		if (!container) return;
-		if (loading) return;
+		if (isLoading) return;
 		if (!!previousChunk && getScrollPosition() <= getTriggerRange()) {
 			isPrevious = true;
 			await executeLoad(async () => {
@@ -221,11 +221,11 @@
 	role="listbox"
 	bind:this={container}
 >
-	{#if loading && isPrevious}<li><slot name="loading" /></li>{/if}
+	{#if isLoading && isPrevious}<li><slot name="loading" /></li>{/if}
 	{#each list as value, index (value.id ?? value)}
 		<li><slot {index} {value} /></li>
 	{/each}
-	{#if loading && !isPrevious}<li><slot name="loading" /></li>{/if}
+	{#if isLoading && !isPrevious}<li><slot name="loading" /></li>{/if}
 </ul>
 
 <style>
