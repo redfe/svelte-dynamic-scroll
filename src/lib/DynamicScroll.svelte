@@ -103,12 +103,10 @@
 	async function loadNext() {
 		if (!nextChunk) return;
 		if (!container) return;
-		const beforeScrollPosition = getScrollPosition();
 		const next = nextChunk(list.length === 0 ? undefined : list[list.length - 1]);
 		if (next.length === 0) return;
 		list = [...list, ...next];
 		await tick();
-		scrollTo(beforeScrollPosition);
 	}
 
 	/**
