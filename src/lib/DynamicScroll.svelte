@@ -6,12 +6,12 @@
 	 */
 
 	/**
-	 * @type {(lastValue:Value)=>Value[]}
+	 * @type {(lastValue:Value | undefined)=>Value[]}
 	 */
 	export let previousChunk = undefined;
 
 	/**
-	 * @type {(lastValue:Value)=>Value[]}
+	 * @type {(lastValue:Value | undefined)=>Value[]}
 	 */
 	export let nextChunk = undefined;
 
