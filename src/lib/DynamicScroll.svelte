@@ -145,8 +145,8 @@
 				while (loadCount === 0 || getScrollSize() <= getClientSize()) {
 					loadCount++;
 					await loadFunc();
-					if (list.length === 0) return;
 					await tick();
+					if (list.length === 0) return;
 					if (maxRetryCountOnPreLoad < loadCount) {
 						break;
 					}
