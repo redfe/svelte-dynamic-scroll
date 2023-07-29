@@ -115,9 +115,9 @@
 	}
 
 	/**
-	 * @param {boolean} isKeepTop
+	 * @param {boolean} isKeepPrevious
 	 */
-	async function downSize(isKeepTop) {
+	async function downSize(isKeepPrevious) {
 		if (!container) return;
 		if (bufferSize < 0) return;
 		if (list.length <= bufferSize) return;
@@ -126,7 +126,7 @@
 		// for memory saving
 		const beforeScrollPosition = getScrollPosition();
 		const beforeScrollSize = getScrollSize();
-		if (isKeepTop) {
+		if (isKeepPrevious) {
 			list = list.slice(0, bufferSize);
 			await tick();
 			scrollTo(beforeScrollPosition);
@@ -138,33 +138,19 @@
 		}
 	}
 
-	async function preLoad() {
+	async function handleOnScroll(event) {
+		await load();
+		if (onScrollCallback) await onScrollCallback(event);
+	}
+
+	function addScrollEventListener() {
 		if (!container) return;
-		if (loading) return;
-		loading = true;
-		removeScrollEventListener();
-		try {
-			const loadInternal = async (loadFunc) => {
-				// 画面いっぱいに表示するまでロードする
-				let loadCount = 0;
-				while (loadCount === 0 || getScrollSize() <= getClientSize()) {
-					loadCount++;
-					await loadFunc();
-					await tick();
-					if (list.length === 0) return;
-					if (maxRetryCountOnPreLoad < loadCount) {
-						break;
-					}
-				}
-			};
-			await loadInternal(loadNext);
-			await tick();
-			await loadInternal(loadPrevious);
-			await tick();
-			await downSize(true);
-		} finally {
-			loading = false;
-		}
+		container.addEventListener('scroll', handleOnScroll);
+	}
+
+	function removeScrollEventListener() {
+		if (!container) return;
+		container.removeEventListener('scroll', handleOnScroll);
 	}
 
 	async function executeLoad(loadFunc) {
@@ -199,19 +185,27 @@
 		}
 	}
 
-	async function handleOnScroll(event) {
-		await load();
-		if (onScrollCallback) onScrollCallback(event);
+	async function executePreLoad(loadFunc) {
+		// 画面いっぱいに表示するまでロードする
+		let loadCount = 0;
+		while (loadCount === 0 || getScrollSize() <= getClientSize()) {
+			loadCount++;
+			await loadFunc();
+			await tick();
+			if (list.length === 0) return;
+			if (maxRetryCountOnPreLoad < loadCount) {
+				break;
+			}
+		}
 	}
 
-	function addScrollEventListener() {
+	async function preLoad() {
 		if (!container) return;
-		container.addEventListener('scroll', handleOnScroll);
-	}
-
-	function removeScrollEventListener() {
-		if (!container) return;
-		container.removeEventListener('scroll', handleOnScroll);
+		await executePreLoad(loadNext);
+		await tick();
+		await executePreLoad(loadPrevious);
+		await tick();
+		await downSize(true);
 	}
 
 	onMount(async () => {
