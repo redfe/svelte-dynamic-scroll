@@ -120,6 +120,7 @@
 	async function downSize(isKeepTop) {
 		if (!container) return;
 		if (bufferSize < 0) return;
+		if (list.length <= bufferSize) return;
 		// previousChunk と nextChunk のどちらかがない場合は戻ることができないので downSize しない
 		if (!previousChunk || !nextChunk) return;
 		// for memory saving
@@ -131,7 +132,7 @@
 			scrollTo(beforeScrollPosition);
 		} else {
 			const sub = Math.max(0, list.length - bufferSize);
-			list = list.slice(sub, sub + bufferSize);
+			list = list.slice(sub);
 			await tick();
 			scrollTo(beforeScrollPosition - (beforeScrollSize - getScrollSize()));
 		}
@@ -238,6 +239,8 @@
 		width: 100%;
 		height: 100%;
 		box-sizing: border-box;
+		/* for mobile phone */
+		overscroll-behavior: none;
 	}
 	ul {
 		padding: 0;
