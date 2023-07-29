@@ -136,6 +136,7 @@
 		if (!container) return;
 		if (loading) return;
 		loading = true;
+		removeScrollEventListener();
 		try {
 			const loadInternal = async (loadFunc) => {
 				// 画面いっぱいに表示するまでロードする
@@ -160,28 +161,54 @@
 		}
 	}
 
+	async function executeLoad(loadFunc) {
+		loading = true;
+		removeScrollEventListener();
+		try {
+			await loadFunc();
+		} finally {
+			loading = false;
+			addScrollEventListener();
+		}
+	}
+
 	async function load() {
 		if (!container) return;
 		if (loading) return;
-		loading = true;
-		try {
-			if (!!previousChunk && getScrollPosition() <= getTriggerRange()) {
+		if (!!previousChunk && getScrollPosition() <= getTriggerRange()) {
+			await executeLoad(async () => {
 				await loadPrevious();
 				await downSize(true);
-			} else if (
-				!!nextChunk &&
-				getScrollPosition() >= getScrollSize() - getClientSize() - getTriggerRange()
-			) {
+			});
+		} else if (
+			!!nextChunk &&
+			getScrollPosition() >= getScrollSize() - getClientSize() - getTriggerRange()
+		) {
+			await executeLoad(async () => {
 				await loadNext();
 				await downSize(false);
-			}
-		} finally {
-			loading = false;
+			});
 		}
+	}
+
+	async function handleOnScroll(event) {
+		await load();
+		if (onScrollCallback) onScrollCallback(event);
+	}
+
+	function addScrollEventListener() {
+		if (!container) return;
+		container.addEventListener('scroll', handleOnScroll);
+	}
+
+	function removeScrollEventListener() {
+		if (!container) return;
+		container.removeEventListener('scroll', handleOnScroll);
 	}
 
 	onMount(async () => {
 		await preLoad();
+		addScrollEventListener();
 	});
 </script>
 
@@ -191,10 +218,6 @@
 	style:display={isY ? 'block' : 'flex'}
 	role="listbox"
 	bind:this={container}
-	on:scroll={async (event) => {
-		await load();
-		if (onScrollCallback) onScrollCallback(event);
-	}}
 >
 	{#each list as value, index (value.id ?? value)}
 		<li><slot {index} {value} /></li>
