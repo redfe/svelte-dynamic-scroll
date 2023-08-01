@@ -52,7 +52,6 @@
 	 * @return {import('./types.d.ts').DateValue[]}
 	 */
 	async function previousChunk(lastValue) {
-		await new Promise((resolve) => setTimeout(resolve, 1000));
 		let _last = lastValue ?? createValue(selected.increment(initialDatetime, 1));
 		if (isOverPrevious(_last.datetime)) return !lastValue ? [_last] : [];
 		let array = [];
@@ -71,7 +70,6 @@
 	 * @return {import('./types.d.ts').DateValue[]}
 	 */
 	async function nextChunk(lastValue) {
-		await new Promise((resolve) => setTimeout(resolve, 1000));
 		let _last = lastValue ?? createValue(selected.increment(initialDatetime, -1));
 		if (isOverNext(_last.datetime)) return !lastValue ? [_last] : [];
 		let array = [];

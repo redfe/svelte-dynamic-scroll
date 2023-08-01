@@ -41,6 +41,8 @@
 	 */
 	export let axis = 'y';
 
+	const itemClassName = '_ds_item_' + Math.random().toString(32).substring(2);
+
 	/**
 	 * @type {Value[]}
 	 */
@@ -114,6 +116,23 @@
 		await tick();
 	}
 
+	async function waitForRendered() {
+		const MAX_RETRY_COUNT = 10;
+		let retryCount = 0;
+		const check = async (resolve) => {
+			if (
+				container.querySelectorAll(`.${itemClassName}`).length === list.length ||
+				MAX_RETRY_COUNT <= retryCount
+			) {
+				resolve();
+				return;
+			}
+			retryCount++;
+			setTimeout(() => check(resolve), 100);
+		};
+		await new Promise((resolve) => check(resolve));
+	}
+
 	/**
 	 * @param {boolean} isKeepPrevious
 	 */
@@ -134,6 +153,8 @@
 			const sub = Math.max(0, list.length - bufferSize);
 			list = list.slice(sub);
 			await tick();
+			// ブラウザによる描画の遅延を考慮して、描画が終わるまで待つ
+			await waitForRendered();
 			scrollTo(beforeScrollPosition - (beforeScrollSize - getScrollSize()));
 		}
 	}
@@ -223,7 +244,7 @@
 >
 	{#if isLoading && isPrevious}<li><slot name="loading" /></li>{/if}
 	{#each list as value, index (value.id ?? value)}
-		<li><slot {index} {value} /></li>
+		<li class={itemClassName}><slot {index} {value} /></li>
 	{/each}
 	{#if isLoading && !isPrevious}<li><slot name="loading" /></li>{/if}
 </ul>
