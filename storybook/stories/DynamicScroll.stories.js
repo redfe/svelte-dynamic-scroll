@@ -2,6 +2,7 @@
 //     https://storybook.js.org/docs/react/writing-tests/test-runner
 import { within, fireEvent } from '@storybook/testing-library';
 import DynamicScrollTest from './DynamicScrollTest.svelte';
+import { expect } from '@storybook/jest';
 
 // More on how to set up stories at: https://storybook.js.org/docs/svelte/writing-stories/introduction
 export default {
@@ -20,6 +21,7 @@ export default {
 };
 
 const INTERVAL = 100;
+const SCROLL_COUNT = 3;
 
 const wait = (millisec) => new Promise((resolve) => setTimeout(resolve, millisec));
 
@@ -33,27 +35,41 @@ const scrollX = async (scrollable, scrollLeft) => {
 	await wait(INTERVAL);
 };
 
-const playAxisY = async ({ canvasElement }) => {
-	const canvas = within(canvasElement);
-	const scrollable = canvas.getByRole('listbox');
-	for (let i = 0; i < 5; i++) {
-		await scrollY(scrollable, 0);
-	}
-	for (let i = 0; i < 5; i++) {
-		await scrollY(scrollable, scrollable.scrollHeight);
-	}
-};
+function playAxisY(verifier) {
+	return async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const scrollable = canvas.getByRole('listbox');
+		const firstScrollHeight = scrollable.scrollHeight;
+		//console.log('firstScrollHeight', firstScrollHeight);
+		for (let i = 0; i < SCROLL_COUNT; i++) {
+			console.log('item count', scrollable.querySelectorAll('li').length);
+			await scrollY(scrollable, 0);
+		}
+		for (let i = 0; i < SCROLL_COUNT; i++) {
+			console.log('item count', scrollable.querySelectorAll('li').length);
+			await scrollY(scrollable, scrollable.scrollHeight);
+		}
+		verifier(scrollable, firstScrollHeight);
+	};
+}
 
-const playAxisX = async ({ canvasElement }) => {
-	const canvas = within(canvasElement);
-	const scrollable = canvas.getByRole('listbox');
-	for (let i = 0; i < 5; i++) {
-		await scrollX(scrollable, 0);
-	}
-	for (let i = 0; i < 5; i++) {
-		await scrollX(scrollable, scrollable.scrollWidth);
-	}
-};
+function playAxisX(verifier) {
+	return async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const scrollable = canvas.getByRole('listbox');
+		const firstScrollWidth = scrollable.scrollWidth;
+		console.log('firstScrollWidth', firstScrollWidth);
+		for (let i = 0; i < SCROLL_COUNT; i++) {
+			console.log('item count', scrollable.querySelectorAll('li').length);
+			await scrollX(scrollable, 0);
+		}
+		for (let i = 0; i < SCROLL_COUNT; i++) {
+			console.log('item count', scrollable.querySelectorAll('li').length);
+			await scrollX(scrollable, scrollable.scrollWidth);
+		}
+		verifier(scrollable, firstScrollWidth);
+	};
+}
 
 export const AxisY_PreviousChunk = {
 	args: {
@@ -63,7 +79,9 @@ export const AxisY_PreviousChunk = {
 			return ret;
 		}
 	},
-	play: playAxisY
+	play: playAxisY((scrollable) =>
+		expect(scrollable.scrollTop).toBe(scrollable.scrollHeight - scrollable.clientHeight)
+	)
 };
 
 export const AxisY_NextChunk = {
@@ -74,7 +92,9 @@ export const AxisY_NextChunk = {
 			return ret;
 		}
 	},
-	play: playAxisY
+	play: playAxisY((scrollable, firstScrollHeight) =>
+		expect(scrollable.scrollTop).toBe(firstScrollHeight * SCROLL_COUNT - scrollable.clientHeight)
+	)
 };
 
 export const AxisY_BothChunks = {
@@ -82,42 +102,45 @@ export const AxisY_BothChunks = {
 		...AxisY_PreviousChunk.args,
 		...AxisY_NextChunk.args
 	},
-	play: playAxisY
+	play: playAxisY((scrollable, firstScrollHeight) =>
+		expect(scrollable.scrollTop).toBe(
+			firstScrollHeight * SCROLL_COUNT * 2 - scrollable.clientHeight
+		)
+	)
 };
 
 export const AxisY_BufferSize_Work_With_BothChunks = {
 	args: {
-		...AxisY_PreviousChunk.args,
-		...AxisY_NextChunk.args,
-		bufferSize: 40
+		...AxisY_BothChunks.args,
+		bufferSize: 20
 	},
-	play: playAxisY
+	play: playAxisY((scrollable, firstScrollHeight) =>
+		expect(scrollable.scrollTop).toBe(firstScrollHeight - scrollable.clientHeight)
+	)
 };
 
 export const AxisY_BufferSize_NotWork_With_previousChunk = {
 	args: {
 		...AxisY_PreviousChunk.args,
-		bufferSize: 40
+		bufferSize: 20
 	},
-	play: playAxisY
+	play: AxisY_PreviousChunk.play
 };
 
 export const AxisY_BufferSize_NotWork_With_nextChunk = {
 	args: {
 		...AxisY_NextChunk.args,
-		bufferSize: 40
+		bufferSize: 20
 	},
-	play: playAxisY
+	play: AxisY_NextChunk.play
 };
 
 export const AxisY_TriggerRangeRatio = {
 	args: {
-		...AxisY_PreviousChunk.args,
-		...AxisY_NextChunk.args,
-		bufferSize: 40,
-		triggerRangeRatio: 0.3
+		...AxisY_BothChunks.args,
+		triggerRangeRatio: 0.2
 	},
-	play: playAxisY
+	play: AxisY_BothChunks.play
 };
 
 export const AxisY_MaxRetryCountOnPreLoad = {
@@ -131,13 +154,16 @@ export const AxisY_MaxRetryCountOnPreLoad = {
 
 export const AxisY_OnScrollCallback = {
 	args: {
-		...AxisY_PreviousChunk.args,
-		...AxisY_NextChunk.args,
+		...AxisY_BothChunks.args,
 		onScrollCallback: (e) => {
-			console.log(e);
+			let count = parseInt(e.target.dataset['callCount'] ?? '0');
+			e.target.dataset['callCount'] = count + 1;
+			console.log('onScrollCallback', e.target.dataset['callCount']);
 		}
 	},
-	play: playAxisY
+	play: playAxisY((scrollable) =>
+		expect(scrollable.dataset['callCount']).toBe(`${SCROLL_COUNT * 2 * 2 - 1}`)
+	)
 };
 
 export const AxisX_PreviousChunk = {
@@ -145,7 +171,9 @@ export const AxisX_PreviousChunk = {
 		...AxisY_PreviousChunk.args,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: playAxisX((scrollable) =>
+		expect(scrollable.scrollLeft).toBe(scrollable.scrollWidth - scrollable.clientWidth)
+	)
 };
 
 export const AxisX_NextChunk = {
@@ -153,7 +181,9 @@ export const AxisX_NextChunk = {
 		...AxisY_NextChunk.args,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: playAxisX((scrollable, firstScrollWidth) =>
+		expect(scrollable.scrollLeft).toBe(firstScrollWidth * SCROLL_COUNT - scrollable.clientWidth)
+	)
 };
 
 export const AxisX_BothChunks = {
@@ -161,7 +191,9 @@ export const AxisX_BothChunks = {
 		...AxisY_BothChunks.args,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: playAxisX((scrollable, firstScrollWidth) =>
+		expect(scrollable.scrollLeft).toBe(firstScrollWidth * SCROLL_COUNT * 2 - scrollable.clientWidth)
+	)
 };
 
 export const AxisX_BufferSize_Work_With_BothChunks = {
@@ -169,7 +201,9 @@ export const AxisX_BufferSize_Work_With_BothChunks = {
 		...AxisY_BufferSize_Work_With_BothChunks.args,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: playAxisX((scrollable, firstScrollWidth) =>
+		expect(scrollable.scrollLeft).toBe(firstScrollWidth - scrollable.clientWidth)
+	)
 };
 
 export const AxisX_BufferSize_NotWork_With_previousChunk = {
@@ -177,7 +211,7 @@ export const AxisX_BufferSize_NotWork_With_previousChunk = {
 		...AxisY_BufferSize_NotWork_With_previousChunk.args,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: AxisX_PreviousChunk.play
 };
 
 export const AxisX_BufferSize_NotWork_With_nextChunk = {
@@ -185,15 +219,16 @@ export const AxisX_BufferSize_NotWork_With_nextChunk = {
 		...AxisY_BufferSize_NotWork_With_nextChunk.args,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: AxisX_NextChunk.play
 };
 
 export const AxisX_TriggerRangeRatio = {
 	args: {
-		...AxisY_TriggerRangeRatio.args,
+		...AxisX_BothChunks.args,
+		triggerRangeRatio: 0.2,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: AxisX_BothChunks.play
 };
 
 export const AxisX_MaxRetryCountOnPreLoad = {
@@ -208,5 +243,7 @@ export const AxisX_OnScrollCallback = {
 		...AxisY_OnScrollCallback.args,
 		axis: 'x'
 	},
-	play: playAxisX
+	play: playAxisX((scrollable) =>
+		expect(scrollable.dataset['callCount']).toBe(`${SCROLL_COUNT * 2 * 2 - 1}`)
+	)
 };

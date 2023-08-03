@@ -11,7 +11,15 @@
 		style:width={isY ? '100px' : '300px'}
 	>
 		<DynamicScroll {...$$props} let:value let:index>
-			<div class="row">{value}({index})</div>
+			{#if isY}
+				<div class="row">
+					{value}({index})
+				</div>
+			{:else}
+				<div class="row" style:width={'35px'} style:overflow-x={'hidden'}>
+					{value}<br />({index})
+				</div>
+			{/if}
 		</DynamicScroll>
 	</div>
 </div>
