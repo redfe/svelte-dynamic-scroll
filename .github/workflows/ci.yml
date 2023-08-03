@@ -21,7 +21,7 @@ jobs:
       # run storybook tests
       - name: Install dependencies
         working-directory: storybook
-        run: npm i
+        run: npm ci
       - name: Install Playwright
         working-directory: storybook
         run: npx playwright install --with-deps
@@ -41,6 +41,7 @@ jobs:
         env:
           BASE_PATH: '/svelte-dynamic-scroll'
         run: |
+          npm ci
           npm run build
           touch build/.nojekyll
 
