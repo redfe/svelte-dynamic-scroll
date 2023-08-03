@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="54" failures="0" errors="0" time="38.526">
+  <testsuite name="DynamicScroll" errors="0" failures="0" skipped="0" timestamp="2023-08-03T12:04:34" time="12.271" tests="18">
+    <testcase classname="DynamicScroll AxisY_PreviousChunk play-test" name="DynamicScroll AxisY_PreviousChunk play-test" time="0.822">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_NextChunk play-test" name="DynamicScroll AxisY_NextChunk play-test" time="0.636">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BothChunks play-test" name="DynamicScroll AxisY_BothChunks play-test" time="0.638">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_Work_With_BothChunks play-test" name="DynamicScroll AxisY_BufferSize_Work_With_BothChunks play-test" time="0.647">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_NotWork_With_previousChunk play-test" name="DynamicScroll AxisY_BufferSize_NotWork_With_previousChunk play-test" time="0.632">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_NotWork_With_nextChunk play-test" name="DynamicScroll AxisY_BufferSize_NotWork_With_nextChunk play-test" time="0.635">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_TriggerRangeRatio play-test" name="DynamicScroll AxisY_TriggerRangeRatio play-test" time="0.638">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_MaxRetryCountOnPreLoad smoke-test" name="DynamicScroll AxisY_MaxRetryCountOnPreLoad smoke-test" time="0.019">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_OnScrollCallback play-test" name="DynamicScroll AxisY_OnScrollCallback play-test" time="0.63">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_PreviousChunk play-test" name="DynamicScroll AxisX_PreviousChunk play-test" time="0.631">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_NextChunk play-test" name="DynamicScroll AxisX_NextChunk play-test" time="0.63">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BothChunks play-test" name="DynamicScroll AxisX_BothChunks play-test" time="0.62">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_Work_With_BothChunks play-test" name="DynamicScroll AxisX_BufferSize_Work_With_BothChunks play-test" time="0.635">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_NotWork_With_previousChunk play-test" name="DynamicScroll AxisX_BufferSize_NotWork_With_previousChunk play-test" time="0.632">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_NotWork_With_nextChunk play-test" name="DynamicScroll AxisX_BufferSize_NotWork_With_nextChunk play-test" time="0.636">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_TriggerRangeRatio play-test" name="DynamicScroll AxisX_TriggerRangeRatio play-test" time="0.638">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_MaxRetryCountOnPreLoad smoke-test" name="DynamicScroll AxisX_MaxRetryCountOnPreLoad smoke-test" time="0.017">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_OnScrollCallback play-test" name="DynamicScroll AxisX_OnScrollCallback play-test" time="0.632">
+    </testcase>
+  </testsuite>
+  <testsuite name="DynamicScroll" errors="0" failures="0" skipped="0" timestamp="2023-08-03T12:04:46" time="11.662" tests="18">
+    <testcase classname="DynamicScroll AxisY_PreviousChunk play-test" name="DynamicScroll AxisY_PreviousChunk play-test" time="0.822">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_NextChunk play-test" name="DynamicScroll AxisY_NextChunk play-test" time="0.637">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BothChunks play-test" name="DynamicScroll AxisY_BothChunks play-test" time="0.642">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_Work_With_BothChunks play-test" name="DynamicScroll AxisY_BufferSize_Work_With_BothChunks play-test" time="0.635">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_NotWork_With_previousChunk play-test" name="DynamicScroll AxisY_BufferSize_NotWork_With_previousChunk play-test" time="0.622">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_NotWork_With_nextChunk play-test" name="DynamicScroll AxisY_BufferSize_NotWork_With_nextChunk play-test" time="0.623">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_TriggerRangeRatio play-test" name="DynamicScroll AxisY_TriggerRangeRatio play-test" time="0.623">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_MaxRetryCountOnPreLoad smoke-test" name="DynamicScroll AxisY_MaxRetryCountOnPreLoad smoke-test" time="0.013">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_OnScrollCallback play-test" name="DynamicScroll AxisY_OnScrollCallback play-test" time="0.631">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_PreviousChunk play-test" name="DynamicScroll AxisX_PreviousChunk play-test" time="0.633">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_NextChunk play-test" name="DynamicScroll AxisX_NextChunk play-test" time="0.627">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BothChunks play-test" name="DynamicScroll AxisX_BothChunks play-test" time="0.624">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_Work_With_BothChunks play-test" name="DynamicScroll AxisX_BufferSize_Work_With_BothChunks play-test" time="0.628">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_NotWork_With_previousChunk play-test" name="DynamicScroll AxisX_BufferSize_NotWork_With_previousChunk play-test" time="0.632">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_NotWork_With_nextChunk play-test" name="DynamicScroll AxisX_BufferSize_NotWork_With_nextChunk play-test" time="0.633">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_TriggerRangeRatio play-test" name="DynamicScroll AxisX_TriggerRangeRatio play-test" time="0.632">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_MaxRetryCountOnPreLoad smoke-test" name="DynamicScroll AxisX_MaxRetryCountOnPreLoad smoke-test" time="0.018">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_OnScrollCallback play-test" name="DynamicScroll AxisX_OnScrollCallback play-test" time="0.632">
+    </testcase>
+  </testsuite>
+  <testsuite name="DynamicScroll" errors="0" failures="0" skipped="0" timestamp="2023-08-03T12:04:58" time="11.925" tests="18">
+    <testcase classname="DynamicScroll AxisY_PreviousChunk play-test" name="DynamicScroll AxisY_PreviousChunk play-test" time="0.799">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_NextChunk play-test" name="DynamicScroll AxisY_NextChunk play-test" time="0.646">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BothChunks play-test" name="DynamicScroll AxisY_BothChunks play-test" time="0.64">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_Work_With_BothChunks play-test" name="DynamicScroll AxisY_BufferSize_Work_With_BothChunks play-test" time="0.651">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_NotWork_With_previousChunk play-test" name="DynamicScroll AxisY_BufferSize_NotWork_With_previousChunk play-test" time="0.643">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_BufferSize_NotWork_With_nextChunk play-test" name="DynamicScroll AxisY_BufferSize_NotWork_With_nextChunk play-test" time="0.643">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_TriggerRangeRatio play-test" name="DynamicScroll AxisY_TriggerRangeRatio play-test" time="0.641">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_MaxRetryCountOnPreLoad smoke-test" name="DynamicScroll AxisY_MaxRetryCountOnPreLoad smoke-test" time="0.023">
+    </testcase>
+    <testcase classname="DynamicScroll AxisY_OnScrollCallback play-test" name="DynamicScroll AxisY_OnScrollCallback play-test" time="0.638">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_PreviousChunk play-test" name="DynamicScroll AxisX_PreviousChunk play-test" time="0.647">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_NextChunk play-test" name="DynamicScroll AxisX_NextChunk play-test" time="0.643">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BothChunks play-test" name="DynamicScroll AxisX_BothChunks play-test" time="0.648">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_Work_With_BothChunks play-test" name="DynamicScroll AxisX_BufferSize_Work_With_BothChunks play-test" time="0.652">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_NotWork_With_previousChunk play-test" name="DynamicScroll AxisX_BufferSize_NotWork_With_previousChunk play-test" time="0.653">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_BufferSize_NotWork_With_nextChunk play-test" name="DynamicScroll AxisX_BufferSize_NotWork_With_nextChunk play-test" time="0.649">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_TriggerRangeRatio play-test" name="DynamicScroll AxisX_TriggerRangeRatio play-test" time="0.646">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_MaxRetryCountOnPreLoad smoke-test" name="DynamicScroll AxisX_MaxRetryCountOnPreLoad smoke-test" time="0.024">
+    </testcase>
+    <testcase classname="DynamicScroll AxisX_OnScrollCallback play-test" name="DynamicScroll AxisX_OnScrollCallback play-test" time="0.648">
+    </testcase>
+  </testsuite>
+</testsuites>

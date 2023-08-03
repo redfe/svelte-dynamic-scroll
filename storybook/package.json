@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "test-storybook --browsers chromium webkit firefox",
+		"test": "test-storybook --browsers chromium webkit firefox --junit",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
 	},
