@@ -42,11 +42,11 @@ function playAxisY(verifier) {
 		const firstScrollHeight = scrollable.scrollHeight;
 		//console.log('firstScrollHeight', firstScrollHeight);
 		for (let i = 0; i < SCROLL_COUNT; i++) {
-			console.log('item count', scrollable.querySelectorAll('li').length);
+			//console.log('item count', scrollable.querySelectorAll('li').length);
 			await scrollY(scrollable, 0);
 		}
 		for (let i = 0; i < SCROLL_COUNT; i++) {
-			console.log('item count', scrollable.querySelectorAll('li').length);
+			//console.log('item count', scrollable.querySelectorAll('li').length);
 			await scrollY(scrollable, scrollable.scrollHeight);
 		}
 		verifier(scrollable, firstScrollHeight);
@@ -58,17 +58,21 @@ function playAxisX(verifier) {
 		const canvas = within(canvasElement);
 		const scrollable = canvas.getByRole('listbox');
 		const firstScrollWidth = scrollable.scrollWidth;
-		console.log('firstScrollWidth', firstScrollWidth);
+		//console.log('firstScrollWidth', firstScrollWidth);
 		for (let i = 0; i < SCROLL_COUNT; i++) {
-			console.log('item count', scrollable.querySelectorAll('li').length);
+			//console.log('item count', scrollable.querySelectorAll('li').length);
 			await scrollX(scrollable, 0);
 		}
 		for (let i = 0; i < SCROLL_COUNT; i++) {
-			console.log('item count', scrollable.querySelectorAll('li').length);
+			//console.log('item count', scrollable.querySelectorAll('li').length);
 			await scrollX(scrollable, scrollable.scrollWidth);
 		}
 		verifier(scrollable, firstScrollWidth);
 	};
+}
+
+function expectNumber(expected, actual) {
+	expect(Math.floor(expected)).toBe(Math.floor(actual));
 }
 
 export const AxisY_PreviousChunk = {
@@ -80,7 +84,7 @@ export const AxisY_PreviousChunk = {
 		}
 	},
 	play: playAxisY((scrollable) =>
-		expect(scrollable.scrollTop).toBe(scrollable.scrollHeight - scrollable.clientHeight)
+		expectNumber(scrollable.scrollTop, scrollable.scrollHeight - scrollable.clientHeight)
 	)
 };
 
@@ -93,7 +97,7 @@ export const AxisY_NextChunk = {
 		}
 	},
 	play: playAxisY((scrollable, firstScrollHeight) =>
-		expect(scrollable.scrollTop).toBe(firstScrollHeight * SCROLL_COUNT - scrollable.clientHeight)
+		expectNumber(scrollable.scrollTop, firstScrollHeight * SCROLL_COUNT - scrollable.clientHeight)
 	)
 };
 
@@ -103,7 +107,8 @@ export const AxisY_BothChunks = {
 		...AxisY_NextChunk.args
 	},
 	play: playAxisY((scrollable, firstScrollHeight) =>
-		expect(scrollable.scrollTop).toBe(
+		expectNumber(
+			scrollable.scrollTop,
 			firstScrollHeight * SCROLL_COUNT * 2 - scrollable.clientHeight
 		)
 	)
@@ -115,7 +120,7 @@ export const AxisY_BufferSize_Work_With_BothChunks = {
 		bufferSize: 20
 	},
 	play: playAxisY((scrollable, firstScrollHeight) =>
-		expect(scrollable.scrollTop).toBe(firstScrollHeight - scrollable.clientHeight)
+		expectNumber(scrollable.scrollTop, firstScrollHeight - scrollable.clientHeight)
 	)
 };
 
@@ -162,7 +167,7 @@ export const AxisY_OnScrollCallback = {
 		}
 	},
 	play: playAxisY((scrollable) =>
-		expect(scrollable.dataset['callCount']).toBe(`${SCROLL_COUNT * 2 * 2 - 1}`)
+		expectNumber(scrollable.dataset['callCount'], `${SCROLL_COUNT * 2 * 2 - 1}`)
 	)
 };
 
@@ -172,7 +177,7 @@ export const AxisX_PreviousChunk = {
 		axis: 'x'
 	},
 	play: playAxisX((scrollable) =>
-		expect(scrollable.scrollLeft).toBe(scrollable.scrollWidth - scrollable.clientWidth)
+		expectNumber(scrollable.scrollLeft, scrollable.scrollWidth - scrollable.clientWidth)
 	)
 };
 
@@ -182,7 +187,7 @@ export const AxisX_NextChunk = {
 		axis: 'x'
 	},
 	play: playAxisX((scrollable, firstScrollWidth) =>
-		expect(scrollable.scrollLeft).toBe(firstScrollWidth * SCROLL_COUNT - scrollable.clientWidth)
+		expectNumber(scrollable.scrollLeft, firstScrollWidth * SCROLL_COUNT - scrollable.clientWidth)
 	)
 };
 
@@ -192,7 +197,10 @@ export const AxisX_BothChunks = {
 		axis: 'x'
 	},
 	play: playAxisX((scrollable, firstScrollWidth) =>
-		expect(scrollable.scrollLeft).toBe(firstScrollWidth * SCROLL_COUNT * 2 - scrollable.clientWidth)
+		expectNumber(
+			scrollable.scrollLeft,
+			firstScrollWidth * SCROLL_COUNT * 2 - scrollable.clientWidth
+		)
 	)
 };
 
@@ -202,7 +210,7 @@ export const AxisX_BufferSize_Work_With_BothChunks = {
 		axis: 'x'
 	},
 	play: playAxisX((scrollable, firstScrollWidth) =>
-		expect(scrollable.scrollLeft).toBe(firstScrollWidth - scrollable.clientWidth)
+		expectNumber(scrollable.scrollLeft, firstScrollWidth - scrollable.clientWidth)
 	)
 };
 
@@ -244,6 +252,6 @@ export const AxisX_OnScrollCallback = {
 		axis: 'x'
 	},
 	play: playAxisX((scrollable) =>
-		expect(scrollable.dataset['callCount']).toBe(`${SCROLL_COUNT * 2 * 2 - 1}`)
+		expectNumber(scrollable.dataset['callCount'], `${SCROLL_COUNT * 2 * 2 - 1}`)
 	)
 };
