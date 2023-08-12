@@ -9,18 +9,18 @@ A simple Dynamic Scroll Component for Svelte.
 ## Installation
 
 ```
-$ npm i svelte-dynamic-scroll
+$ npm i -D svelte-dynamic-scroll
 
 or
 
-$ yarn add svelte-dynamic-scroll
+$ yarn add -D svelte-dynamic-scroll
 ```
 
 ## Usage
 
 ```svelte
 <script>
-	import { DynamicScroll } from 'svelte-dynamic-scroll';
+	import DynamicScroll from 'svelte-dynamic-scroll';
 
 	/**
 	 * @param {number} lastValue
@@ -71,17 +71,17 @@ https://redfe.github.io/svelte-dynamic-scroll
 
 ## Properties
 
-| Property               | Type                                          | Default   | Description                                                                          |
-| ---------------------- | --------------------------------------------- | --------- | ------------------------------------------------------------------------------------ |
-| previousChunk          | (lastValue:VALUE &#124; undefined) => VALUE[] | undefined | Function to be called when the scroll reaches the top of the container.              |
-| nextChunk              | (lastValue:VALUE &#124; undefined) => VALUE[] | undefined | Function to be called when the scroll reaches the bottom of the container.           |
-| bufferSize             | number                                        | -1        | Number of elements to be rendered before and after the visible area.                 |
-| triggerRangeRatio      | number                                        | 0.1       | The ratio of the visible area to trigger the previousChunk or nextChunk function.    |
-| maxRetryCountOnPreLoad | number                                        | 20        | Maximum number of retries when the previousChunk or nextChunk function returns null. |
-| onScrollCallback       | (event:UIEvent) => void                       | undefined | Callback function to be invoked when the scroll event occurs.                        |
-| axis                   | string                                        | 'y'       | Scroll axis. 'x' or 'y'                                                              |
+| Property               | Type                                                  | Default   | Description                                                                          |
+| ---------------------- | ----------------------------------------------------- | --------- | ------------------------------------------------------------------------------------ |
+| previousChunk          | (lastValue:Value=) => Value[] &#124; Promise<Value[]> | undefined | Function to be called when the scroll reaches the top of the container.              |
+| nextChunk              | (lastValue:Value=) => Value[] &#124; Promise<Value[]> | undefined | Function to be called when the scroll reaches the bottom of the container.           |
+| bufferSize             | number                                                | -1        | Number of elements to be rendered before and after the visible area.                 |
+| triggerRangeRatio      | number                                                | 0.1       | The ratio of the visible area to trigger the previousChunk or nextChunk function.    |
+| maxRetryCountOnPreLoad | number                                                | 20        | Maximum number of retries when the previousChunk or nextChunk function returns null. |
+| onScrollCallback       | (event:UIEvent) => void                               | undefined | Callback function to be invoked when the scroll event occurs.                        |
+| axis                   | string                                                | 'y'       | Scroll axis. 'x' or 'y'                                                              |
 
-`VALUE` is the type of the return value of the `previousChunk` function and the `nextChunk` function.
+`Value` is the type of the return value of the `previousChunk` function and the `nextChunk` function.
 
 ## Slots
 
@@ -95,9 +95,9 @@ https://redfe.github.io/svelte-dynamic-scroll
 | Property | Type   | Description                                                                                                                                         |
 | -------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | index    | number | Index of the element to be rendered.                                                                                                                |
-| value    | VALUE  | Value of the element to be rendered. It should have the same type as the return value of the `previousChunk` function and the `nextChunk` function. |
+| value    | Value  | Value of the element to be rendered. It should have the same type as the return value of the `previousChunk` function and the `nextChunk` function. |
 
-`VALUE` is the type of the return value of the `previousChunk` function and the `nextChunk` function.
+`Value` is the type of the return value of the `previousChunk` function and the `nextChunk` function.
 
 ## Developing
 
