@@ -39,7 +39,7 @@ $ yarn add -D svelte-dynamic-scroll
 	<h2>Infinite Scroll</h2>
 	<div class="container">
 		<DynamicScroll {nextChunk} let:index let:value>
-			<div>{value}:{index}</div>
+			<div>{value}:({index})</div>
 			<div slot="loading">loading...</div>
 		</DynamicScroll>
 	</div>
