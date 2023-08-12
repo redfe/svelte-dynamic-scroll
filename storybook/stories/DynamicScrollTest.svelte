@@ -1,4 +1,5 @@
 <script>
+	// @ts-ignore
 	import DynamicScroll from '../../src/lib/DynamicScroll.svelte';
 	$: axis = $$props.axis ?? 'y';
 	$: isY = axis === 'y' || axis === '';

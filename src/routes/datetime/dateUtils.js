@@ -18,6 +18,15 @@ import {
 	startOfSecond
 } from 'date-fns';
 
+/**
+ * @typedef {import('./types.d.ts').DateOptions} DateOptions
+ */
+
+/**
+ * @param {Date} date
+ * @param {() => string} formatFunc
+ * @returns {string}
+ */
 const formatIfValid = (date, formatFunc) => {
 	if (isInvalidDate(date)) {
 		return '';
@@ -26,7 +35,7 @@ const formatIfValid = (date, formatFunc) => {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const by10000Year = {
 	label: 'by 10000 years',
@@ -36,7 +45,7 @@ const by10000Year = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const by1000Year = {
 	label: 'by 1000 years',
@@ -46,7 +55,7 @@ const by1000Year = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const by100Year = {
 	label: 'by 100 years',
@@ -56,7 +65,7 @@ const by100Year = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const by10Year = {
 	label: 'by 10 years',
@@ -65,6 +74,9 @@ const by10Year = {
 	startOf: (date) => byYear.startOf(setYear(date, Math.floor(getYear(date) / 10) * 10))
 };
 
+/**
+ * @type {DateOptions}
+ */
 const byYear = {
 	label: 'by year',
 	format: (date) => formatIfValid(date, () => format(date, 'G y')),
@@ -73,7 +85,7 @@ const byYear = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const byMonth = {
 	label: 'by month',
@@ -83,7 +95,7 @@ const byMonth = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const byDay = {
 	label: 'by day',
@@ -93,7 +105,7 @@ const byDay = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const byHour = {
 	label: 'by hour',
@@ -103,7 +115,7 @@ const byHour = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const byMinute = {
 	label: 'by minute',
@@ -113,7 +125,7 @@ const byMinute = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const bySecond = {
 	label: 'by second',
@@ -123,7 +135,7 @@ const bySecond = {
 };
 
 /**
- * @type {import('./types.d.ts').DateOptions}
+ * @type {DateOptions}
  */
 const byMillisecond = {
 	label: 'by millisecond',
@@ -132,10 +144,18 @@ const byMillisecond = {
 	startOf: (date) => date
 };
 
+/**
+ * @param {Date} date
+ * @returns {boolean}
+ */
 const isInvalidDate = (date) => {
 	return date.toString() === 'Invalid Date';
 };
 
+/**
+ * @type {(Date) => string}
+ * @returns {string}
+ */
 export const formatDate = (date) => {
 	if (isInvalidDate(date)) {
 		return '';
@@ -143,6 +163,11 @@ export const formatDate = (date) => {
 	return date.toISOString();
 };
 
+/**
+ *
+ * @param {string} formatted
+ * @returns {Date}
+ */
 export const parseDate = (formatted) => {
 	return new Date(formatted);
 };

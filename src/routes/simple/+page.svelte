@@ -1,12 +1,13 @@
 <script>
-	import { DynamicScroll } from '$lib/index';
+	import DynamicScroll from '$lib/DynamicScroll.svelte';
 
 	const MAX = 500;
 	const chunkSize = 20;
 	const initialValue = 0;
 
 	/**
-	 * @type {function(number[]): number}
+	 * @param {number[]} array
+	 * @returns {number}
 	 */
 	const getEndOfArray = (array) => array[array.length - 1];
 

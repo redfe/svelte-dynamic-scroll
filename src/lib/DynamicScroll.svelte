@@ -2,16 +2,18 @@
 	import { tick, onMount } from 'svelte';
 
 	/**
-	 * @typedef {any} Value
+	 * @typedef {import('./types.d.ts').Value} Value
+	 * @typedef {import('./types.d.ts').ChunkExtractor} ChunkExtractor
 	 */
 
+	// ビルド後の DynamicScroll.svelte.d.ts で正しく型が出力されるようにするために、@type を使ってます。
 	/**
-	 * @type {(lastValue:Value | undefined)=>Value[]}
+	 * @type {ChunkExtractor}
 	 */
 	export let previousChunk = undefined;
 
 	/**
-	 * @type {(lastValue:Value | undefined)=>Value[]}
+	 * @type {ChunkExtractor}
 	 */
 	export let nextChunk = undefined;
 
@@ -49,7 +51,7 @@
 	let list = [];
 
 	/**
-	 * @type {HTMLUlListElement}
+	 * @type {HTMLUListElement}
 	 */
 	let container;
 
@@ -63,7 +65,7 @@
 	 */
 	let isPrevious = false;
 
-	$: isY = axis === '' || axis === 'y';
+	$: isY = axis === 'y';
 
 	function getScrollSize() {
 		if (!container) return 0;
@@ -85,6 +87,9 @@
 		return getClientSize() * triggerRangeRatio;
 	}
 
+	/**
+	 * @param {number} scrollPosition
+	 */
 	function scrollTo(scrollPosition) {
 		if (!container) return;
 		if (isY) {
@@ -243,7 +248,7 @@
 	bind:this={container}
 >
 	{#if isLoading && isPrevious}<li><slot name="loading" /></li>{/if}
-	{#each list as value, index (value.id ?? value)}
+	{#each list as value, index (value['id'] ?? value)}
 		<li class={itemClassName}><slot {index} {value} /></li>
 	{/each}
 	{#if isLoading && !isPrevious}<li><slot name="loading" /></li>{/if}

@@ -1,5 +1,5 @@
 <script>
-	import { DynamicScroll } from '$lib/index';
+	import DynamicScroll from '$lib/DynamicScroll.svelte';
 	import { fade } from 'svelte/transition';
 	import { types, formatDate, parseDate, isOverPrevious, isOverNext } from './dateUtils.js';
 
@@ -7,8 +7,9 @@
 	const triggerRangeRatio = 0.3;
 
 	/**
-	 * @type {import('./types.d.ts').DateOptions}
+	 * @typedef {import('./types.d.ts').DateValue} DateValue
 	 */
+
 	let selected = types[6];
 	let initialDatetime = selected.startOf(new Date());
 
@@ -18,10 +19,10 @@
 	let timelineElement;
 
 	/**
-	 * @return {HTMLDivElement | null}
+	 * @returns {HTMLDivElement | undefined}
 	 */
 	function selectTopRowElement() {
-		if (!timelineElement) return null;
+		if (!timelineElement) return undefined;
 		return /** @type HTMLDivElement */ (
 			document.elementFromPoint(
 				// border 分を考慮しての 2px 足す。
@@ -32,6 +33,9 @@
 		);
 	}
 
+	/**
+	 * @returns {void}
+	 */
 	function changeInitialDatetime() {
 		const topRowElement = selectTopRowElement();
 		if (topRowElement) {
@@ -41,19 +45,22 @@
 
 	/**
 	 * @param {Date} datetime
-	 * @returns {import('./types.d.ts').DateValue}
+	 * @returns {DateValue}
 	 */
 	function createValue(datetime) {
 		return { id: selected.format(datetime), datetime: datetime };
 	}
 
+	/**
+	 * @returns {Promise<void>}
+	 */
 	async function dummyWait() {
 		await new Promise((resolve) => setTimeout(resolve, 500));
 	}
 
 	/**
-	 * @param {import('./types.d.ts').DateValue|undefined} lastValue
-	 * @return {import('./types.d.ts').DateValue[]}
+	 * @param {DateValue=} lastValue
+	 * @returns {Promise<DateValue[]>}
 	 */
 	async function previousChunk(lastValue) {
 		await dummyWait();
@@ -71,8 +78,8 @@
 	}
 
 	/**
-	 * @param {import('./types.d.ts').DateValue|undefined} lastValue
-	 * @return {import('./types.d.ts').DateValue[]}
+	 * @param {DateValue=} lastValue
+	 * @returns {Promise<DateValue[]>}
 	 */
 	async function nextChunk(lastValue) {
 		await dummyWait();
@@ -91,7 +98,8 @@
 
 	/**
 	 * @param {MouseEvent} event
-	 * @param {import('./types.d.ts').DateValue} value
+	 * @param {DateValue} value
+	 * @returns {void}
 	 */
 	function changeTypeOnClick(event, value) {
 		const i = types.indexOf(selected);
@@ -120,22 +128,23 @@
 				let:index
 				let:value
 			>
+				{@const _value = /** @type DateValue */ (value)}
 				<div class="loading" slot="loading">loading...</div>
 				<div
 					class="row"
-					class:now={value.datetime <= new Date() &&
-						new Date() < selected.increment(value.datetime, 1)}
-					data-datetime={formatDate(value.datetime)}
+					class:now={_value.datetime <= new Date() &&
+						new Date() < selected.increment(_value.datetime, 1)}
+					data-datetime={formatDate(_value.datetime)}
 					transition:fade={{ duration: 500 }}
 				>
 					<div
 						role="button"
 						tabindex={index}
 						class="row-title"
-						on:click={(e) => changeTypeOnClick(e, value)}
+						on:click={(e) => changeTypeOnClick(e, _value)}
 						on:keydown={() => {}}
 					>
-						{selected.format(value.datetime)}
+						{selected.format(_value.datetime)}
 					</div>
 				</div>
 			</DynamicScroll>
