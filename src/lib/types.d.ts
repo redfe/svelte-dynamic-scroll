@@ -1,1 +1,1 @@
-export type ChunkExtractor<T> = (lastValue?: T) => T[] | Promise<T[]>;
+export type ChunkExtractor<T> = (lastValue?: T | undefined) => T[] | Promise<T[]>;
