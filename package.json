@@ -1,6 +1,6 @@
 {
 	"name": "svelte-dynamic-scroll",
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/redfe/svelte-dynamic-scroll"
