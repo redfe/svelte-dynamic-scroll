@@ -11,7 +11,10 @@
 	 */
 
 	let selected = types[6];
-	let initialDatetime = selected.startOf(new Date());
+	let list = [createValue(new Date(2020, 0, 1))];
+	let initialDatetime = selected.startOf(list[0].datetime);
+
+	$: console.log('list size:', list.length);
 
 	/**
 	 * @type {HTMLDivElement}
@@ -127,6 +130,7 @@
 				bufferSize={100}
 				let:index
 				let:value
+				bind:list
 			>
 				{@const _value = /** @type DateValue */ (value)}
 				<div class="loading" slot="loading">loading...</div>

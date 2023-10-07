@@ -45,9 +45,9 @@
 	const itemClassName = '_ds_item_' + Math.random().toString(32).substring(2);
 
 	/**
-	 * @type {any[]}
+	 * @type {any[]=}
 	 */
-	let list = [];
+	export let list = [];
 
 	/**
 	 * @type {HTMLUListElement}
