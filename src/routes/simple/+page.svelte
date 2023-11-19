@@ -25,10 +25,17 @@
 		}
 		return array;
 	}
+
+	// scrollPosition が効くことを確認するため、初期値を設定しておく
+	const firstChunk = nextChunk(undefined);
+	const secondChunk = nextChunk(firstChunk[firstChunk.length - 1]);
+	let list = [...firstChunk, ...secondChunk];
+	let scrollPosition = 150;
 </script>
 
+<p>scrollPosition:{scrollPosition}</p>
 <div class="app">
-	<DynamicScroll {nextChunk} let:value>
+	<DynamicScroll {nextChunk} bind:scrollPosition bind:list let:value>
 		<div role="row" class="row">{value}</div>
 		{#if value === MAX}<div class="end">end</div>{/if}
 	</DynamicScroll>
@@ -36,12 +43,17 @@
 
 <style>
 	.app {
-		height: 100%;
+		max-height: 700px;
+		height: calc(100% - 50px);
 		width: 100%;
 		overflow-y: hidden;
 		border: solid 1px;
 		box-sizing: border-box;
 		border-radius: 10px;
+	}
+	p {
+		text-align: center;
+		height: 30px;
 	}
 	.row {
 		border: none;

@@ -50,6 +50,11 @@
 	export let list = [];
 
 	/**
+	 * @type {number=}
+	 */
+	export let scrollPosition = undefined;
+
+	/**
 	 * @type {HTMLUListElement}
 	 */
 	let container;
@@ -165,6 +170,7 @@
 
 	async function handleOnScroll(event) {
 		await load();
+		scrollPosition = getScrollPosition();
 		if (onScrollCallback) await onScrollCallback(event);
 	}
 
@@ -235,6 +241,7 @@
 
 	onMount(async () => {
 		await preLoad();
+		if (scrollPosition !== undefined) scrollTo(scrollPosition);
 		addScrollEventListener();
 	});
 </script>

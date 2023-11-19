@@ -81,6 +81,7 @@ https://redfe.github.io/svelte-dynamic-scroll
 | onScrollCallback       | (event:UIEvent) => void                               | undefined | Callback function to be invoked when the scroll event occurs.                                                                                       |
 | axis                   | string                                                | 'y'       | Scroll axis. 'x' or 'y'                                                                                                                             |
 | list                   | VALUE[]                                               | []        | the list of elements to be rendered. It should have the same type as the return value of the `previousChunk` function and the `nextChunk` function. |
+| scrollPosition         | number                                                | undefined | Scroll position.                                                                                                                                    |
 
 `VALUE` is the type of the return value of the `previousChunk` function and the `nextChunk` function.
 

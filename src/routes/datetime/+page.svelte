@@ -14,8 +14,6 @@
 	let list = [createValue(new Date(2020, 0, 1))];
 	let initialDatetime = selected.startOf(list[0].datetime);
 
-	$: console.log('list size:', list.length);
-
 	/**
 	 * @type {HTMLDivElement}
 	 */
@@ -42,6 +40,8 @@
 	function changeInitialDatetime() {
 		const topRowElement = selectTopRowElement();
 		if (topRowElement) {
+			list = undefined;
+			scrollPosition = undefined;
 			initialDatetime = selected.startOf(parseDate(topRowElement.dataset?.datetime));
 		}
 	}
@@ -111,8 +111,11 @@
 		selected = types[next];
 		initialDatetime = selected.startOf(value.datetime);
 	}
+
+	let scrollPosition;
 </script>
 
+<p>scrollPosition:{scrollPosition}</p>
 <div class="app">
 	<header>
 		<select bind:value={selected} on:change={changeInitialDatetime}>
@@ -131,6 +134,7 @@
 				let:index
 				let:value
 				bind:list
+				bind:scrollPosition
 			>
 				{@const _value = /** @type DateValue */ (value)}
 				<div class="loading" slot="loading">loading...</div>
@@ -159,12 +163,16 @@
 
 <style>
 	.app {
-		height: 100%;
+		height: calc(100% - 50px);
 		width: 100%;
 		border: solid 1px;
 		border-radius: 10px;
 		overflow-y: hidden;
 		--header-height: 60px;
+	}
+	p {
+		text-align: center;
+		height: 30px;
 	}
 	header {
 		background-color: silver;
