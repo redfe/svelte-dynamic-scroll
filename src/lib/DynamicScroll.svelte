@@ -2,10 +2,13 @@
 	import { tick, onMount } from 'svelte';
 
 	/**
-	 * @typedef {import('./types.d.ts').ChunkExtractor<any>} ChunkExtractor
+	 * @template T
 	 */
 
-	// ビルド後の DynamicScroll.svelte.d.ts で正しく型が出力されるようにするために、@type を使ってます。
+	/**
+	 * @typedef {import('./DynamicScroll.svelte.d.ts').ChunkExtractor<T>} ChunkExtractor
+	 */
+
 	/**
 	 * @type {ChunkExtractor}
 	 */
@@ -45,7 +48,7 @@
 	const itemClassName = '_ds_item_' + Math.random().toString(32).substring(2);
 
 	/**
-	 * @type {any[]=}
+	 * @type {T[]=}
 	 */
 	export let list = [];
 

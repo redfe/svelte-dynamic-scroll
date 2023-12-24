@@ -1,5 +1,5 @@
 <script>
-	import DynamicScroll from '$lib/DynamicScroll.svelte';
+	import { DynamicScroll } from '$lib/index.js';
 
 	const MAX = 500;
 	const chunkSize = 20;
@@ -12,7 +12,7 @@
 	const getEndOfArray = (array) => array[array.length - 1];
 
 	/**
-	 * @param {number|undefined} lastValue
+	 * @param {number=} lastValue
 	 * @returns {number[]}
 	 */
 	function nextChunk(lastValue) {

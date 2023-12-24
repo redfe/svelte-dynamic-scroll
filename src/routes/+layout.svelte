@@ -10,8 +10,6 @@
 <div class="top">
 	<nav>
 		<a href={`${base}/`}>Home</a>
-		<a href={`${base}/simple`}>Simple</a>
-		<a href={`${base}/datetime`}>Datetime</a>
 		<span />
 		<a href={`${base}/storybook-static`} target="_blank"
 			><img src={`${base}/storybook.svg`} title="Storybook Tests" alt="Storybook Tests" /></a
@@ -47,7 +45,7 @@
 		padding: 0 20px;
 		box-sizing: border-box;
 	}
-	nav *:nth-child(4) {
+	nav *:nth-child(2) {
 		flex-grow: 1;
 		text-align: right;
 	}

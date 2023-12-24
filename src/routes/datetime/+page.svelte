@@ -1,5 +1,5 @@
 <script>
-	import DynamicScroll from '$lib/DynamicScroll.svelte';
+	import { DynamicScroll } from '$lib/index.js';
 	import { fade } from 'svelte/transition';
 	import { types, formatDate, parseDate, isOverPrevious, isOverNext } from './dateUtils.js';
 
